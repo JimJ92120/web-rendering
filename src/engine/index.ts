@@ -1,9 +1,13 @@
 import { vec2, vec4 } from "@/types";
+import EngineObject from "./objects/EngineObject";
+import EngineShader from "./shaders/EngineShader";
 
 import Components from "./components";
 
 import { VERTEX_SHADER_SOURCE } from "./shaders/VertexShader";
 import { FRAGMENT_SHADER_SOURCE } from "./shaders/FragmentShader";
+import Squares1 from "./objects/Squares1";
+import Squares2 from "./objects/Squares2";
 
 export function run(canvasId: string) {
   console.log("running...");
@@ -18,80 +22,45 @@ export function run(canvasId: string) {
   Components.Context.clearColor(context, clearColor);
 
   // shaders
-  const vertexShader: WebGLShader = Components.Shader.create(
+  const vertexShader = new EngineShader(
     context,
-    context.VERTEX_SHADER
+    context.VERTEX_SHADER,
+    VERTEX_SHADER_SOURCE
   );
-  const fragmentShader: WebGLShader = Components.Shader.create(
+  const fragmentShader = new EngineShader(
     context,
-    context.FRAGMENT_SHADER
+    context.FRAGMENT_SHADER,
+    FRAGMENT_SHADER_SOURCE
   );
-
-  Components.Shader.compile(context, vertexShader, VERTEX_SHADER_SOURCE);
-  Components.Shader.compile(context, fragmentShader, FRAGMENT_SHADER_SOURCE);
 
   const program: WebGLProgram = Components.Program.create(context);
 
-  context.attachShader(program, vertexShader);
-  context.attachShader(program, fragmentShader);
+  context.attachShader(program, vertexShader.shader);
+  context.attachShader(program, fragmentShader.shader);
+
   Components.Program.link(context, program);
   context.useProgram(program);
 
   // buffers
-  const bufferPosition: WebGLBuffer = Components.Buffer.create(context);
-  /* eslint-disable */
-  const vertices: Float32Array = new Float32Array([
-    0.0, 0.5,
-    0.0, -0.5,
-    -0.5, 0.0,
-    0.5, 0.0,
-  ]);
-  /* eslint-enable */
-  const vertexSize = 2;
+  const a_vertexColor: number = context.getAttribLocation(
+    program,
+    "a_vertexColor"
+  );
   const a_vertexPosition: number = context.getAttribLocation(
     program,
     "a_vertexPosition"
   );
 
-  context.bindBuffer(context.ARRAY_BUFFER, bufferPosition);
-  context.bufferData(context.ARRAY_BUFFER, vertices, context.STATIC_DRAW);
-  context.vertexAttribPointer(
+  const squares1: EngineObject = Squares1(
+    context,
     a_vertexPosition,
-    vertexSize,
-    context.FLOAT,
-    false,
-    0,
-    0
+    a_vertexColor
   );
-  context.enableVertexAttribArray(a_vertexPosition);
-
-  const bufferColor: WebGLBuffer = Components.Buffer.create(context);
-  /* eslint-disable */
-  const vertexColors: Float32Array = new Float32Array([
-    0.0, 1.0, 0.0, 1.0,
-    0.0, 0.0, 1.0, 1.0,
-    0.0, 1.0, 0.5, 1.0,
-    0.0, 0.5, 1.0, 1.0,
-  ]);
-  /* eslint-enable */
-  const vertexColorSize = 4;
-  const a_vertexColor: number = context.getAttribLocation(
-    program,
-    "a_vertexColor"
+  const squares2: EngineObject = Squares2(
+    context,
+    a_vertexPosition,
+    a_vertexColor
   );
 
-  context.bindBuffer(context.ARRAY_BUFFER, bufferColor);
-  context.bufferData(context.ARRAY_BUFFER, vertexColors, context.STATIC_DRAW);
-  context.vertexAttribPointer(
-    a_vertexColor,
-    vertexColorSize,
-    context.FLOAT,
-    false,
-    0,
-    0
-  );
-  context.enableVertexAttribArray(a_vertexColor);
-
-  // draw
-  context.drawArrays(context.POINTS, 0, vertices.length / vertexSize);
+  [squares1, squares2].map((engineObject) => engineObject.draw());
 }
