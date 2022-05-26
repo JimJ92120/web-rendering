@@ -18,7 +18,8 @@ export default class EngineObject {
   }
 
   draw() {
-    this.initBuffers();
+    this.setBuffer(this.vertices);
+    this.setBuffer(this.colors);
 
     this.context.drawArrays(
       this.context.POINTS,
@@ -27,41 +28,23 @@ export default class EngineObject {
     );
   }
 
-  initBuffers() {
-    const bufferPosition: WebGLBuffer = Components.Buffer.create(this.context);
+  setBuffer(bufferData: BufferData) {
+    const buffer: WebGLBuffer = Components.Buffer.create(this.context);
 
-    this.context.bindBuffer(this.context.ARRAY_BUFFER, bufferPosition);
+    this.context.bindBuffer(this.context.ARRAY_BUFFER, buffer);
     this.context.bufferData(
       this.context.ARRAY_BUFFER,
-      this.vertices.data,
+      bufferData.data,
       this.context.STATIC_DRAW
     );
     this.context.vertexAttribPointer(
-      this.vertices.attribute,
-      this.vertices.size,
+      bufferData.attribute,
+      bufferData.size,
       this.context.FLOAT,
       false,
       0,
       0
     );
-    this.context.enableVertexAttribArray(this.vertices.attribute);
-
-    const bufferColor2: WebGLBuffer = Components.Buffer.create(this.context);
-
-    this.context.bindBuffer(this.context.ARRAY_BUFFER, bufferColor2);
-    this.context.bufferData(
-      this.context.ARRAY_BUFFER,
-      this.colors.data,
-      this.context.STATIC_DRAW
-    );
-    this.context.vertexAttribPointer(
-      this.colors.attribute,
-      this.colors.size,
-      this.context.FLOAT,
-      false,
-      0,
-      0
-    );
-    this.context.enableVertexAttribArray(this.colors.attribute);
+    this.context.enableVertexAttribArray(bufferData.attribute);
   }
 }
