@@ -82,7 +82,34 @@ export function run(canvasId: string) {
       /* eslint-enable */
     }
   );
+  const points2: PointMaterial = new PointMaterial(
+    scene,
+    [smallPoint, increaseColor],
+    {
+      size: 2,
+      /* eslint-disable */
+      data: new Float32Array([
+        0.0, 0.5,
+        0.0, -0.5,
+        -0.5, 0.0,
+        0.5, 0.0,
+      ]),
+      /* eslint-enable */
+    },
+    {
+      size: 4,
+      /* eslint-disable */
+      data: new Float32Array([
+        1.0, 1.0, 1.0, 1.0,
+        0.0, 0.0, 0.0, 1.0,
+        0.0, 1.0, 0.0, 1.0,
+        0.0, 0.0, 1.0, 1.0,
+      ]),
+      /* eslint-enable */
+    }
+  );
 
   triangles.render();
   points.render();
+  points2.render();
 }
