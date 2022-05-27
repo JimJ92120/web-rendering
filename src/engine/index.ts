@@ -28,6 +28,7 @@ export function run(canvasId: string) {
 
   const triangles: TriangleMaterial = new TriangleMaterial(
     scene,
+    [smallPoint, increaseColor],
     {
       size: 2,
       /* eslint-disable */
@@ -53,11 +54,11 @@ export function run(canvasId: string) {
         0.0, 1.0, 0.0, 1.0,
       ]),
       /* eslint-enable */
-    },
-    [smallPoint, increaseColor]
+    }
   );
   const points: PointMaterial = new PointMaterial(
     scene,
+    [bigPoint, standardColor],
     {
       size: 2,
       /* eslint-disable */
@@ -79,8 +80,7 @@ export function run(canvasId: string) {
         0.0, 0.0, 1.0, 1.0,
       ]),
       /* eslint-enable */
-    },
-    [bigPoint, standardColor]
+    }
   );
 
   triangles.render();

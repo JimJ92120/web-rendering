@@ -16,9 +16,9 @@ export default abstract class Material {
 
   constructor(
     scene: Scene,
+    shaders: [Shader, Shader],
     vertices: BufferData,
-    colors: BufferData,
-    shaders: [Shader, Shader]
+    colors: BufferData
   ) {
     this.scene = scene;
     this.vertices = vertices;
