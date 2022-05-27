@@ -2,7 +2,9 @@ import { BufferData } from "./types";
 
 import Components from "../components";
 
-export default class EngineObject {
+import InterfaceMaterial from "./InterfaceMaterial";
+
+export default class Points implements InterfaceMaterial {
   context: WebGL2RenderingContext;
   colors: BufferData;
   vertices: BufferData;

@@ -1,12 +1,14 @@
-import { BufferData } from "./types";
+import { BufferData } from "../../materials/types";
 
-import EngineObject from "./EngineObject";
+import InterfaceMaterial from "../../materials/InterfaceMaterial";
+
+import Points from "../../materials/Points";
 
 export default function Squares1(
   context: WebGL2RenderingContext,
   vertexPositionAttribute: number,
   vertexColorAttribute: number
-): EngineObject {
+): InterfaceMaterial {
   const positionData: BufferData = {
     attribute: vertexPositionAttribute,
     size: 2,
@@ -32,7 +34,7 @@ export default function Squares1(
     /* eslint-enable */
   };
 
-  const squares = new EngineObject(context, positionData, colorsData);
+  const squares = new Points(context, positionData, colorsData);
 
   return squares;
 }

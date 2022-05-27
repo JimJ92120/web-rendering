@@ -1,13 +1,13 @@
 import { vec2, vec4 } from "@/types";
-import EngineObject from "./objects/EngineObject";
-import EngineShader from "./shaders/EngineShader";
+import InterfaceMaterial from "./materials/InterfaceMaterial";
+import EngineShader from "./textures/EngineShader";
 
 import Components from "./components";
 
-import { VERTEX_SHADER_SOURCE } from "./shaders/VertexShader";
-import { FRAGMENT_SHADER_SOURCE } from "./shaders/FragmentShader";
-import Squares1 from "./objects/Squares1";
-import Squares2 from "./objects/Squares2";
+import { VERTEX_SHADER_SOURCE } from "./textures/VertexShader";
+import { FRAGMENT_SHADER_SOURCE } from "./textures/FragmentShader";
+import Squares1 from "./objects/materials/Squares1";
+import Squares2 from "./objects/materials/Squares2";
 
 export function run(canvasId: string) {
   console.log("running...");
@@ -51,16 +51,16 @@ export function run(canvasId: string) {
     "a_vertexPosition"
   );
 
-  const squares1: EngineObject = Squares1(
+  const squares1: InterfaceMaterial = Squares1(
     context,
     a_vertexPosition,
     a_vertexColor
   );
-  const squares2: EngineObject = Squares2(
+  const squares2: InterfaceMaterial = Squares2(
     context,
     a_vertexPosition,
     a_vertexColor
   );
 
-  [squares1, squares2].map((engineObject) => engineObject.draw());
+  [squares1, squares2].map((material) => material.draw());
 }
