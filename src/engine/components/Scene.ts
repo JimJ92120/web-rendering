@@ -1,43 +1,17 @@
 import { vec2, vec4 } from "@/engine/types";
-import Material from "@/engine/components/Material";
 
-import InterfaceMaterial from "@/engine/components/Material";
-import Program from "@/engine/components/Program";
-import Shader from "@/engine/components/Shader";
-
-export default class Renderer {
+export default class Scene {
   canvas: HTMLCanvasElement;
   context: WebGL2RenderingContext;
-  materials: InterfaceMaterial[] = [];
-  program: Program;
 
   constructor(canvasId: string) {
     this.setCanvas(canvasId);
     this.setContext();
-    this.setProgram();
-  }
-
-  addMaterials(newMaterials: Material[]) {
-    const materials: InterfaceMaterial[] = this.materials;
-
-    this.materials = [...materials, ...newMaterials];
-  }
-
-  attachShaders(shaders: Shader[]) {
-    shaders.map(({ shader }) =>
-      this.context.attachShader(this.program.program, shader)
-    );
-    this.program.link();
   }
 
   clearColor(color: vec4) {
     this.context.clearColor(color[0], color[1], color[2], color[3]);
     this.context.clear(this.context.COLOR_BUFFER_BIT);
-  }
-
-  render() {
-    this.useProgram();
-    this.materials.map((material) => material.draw());
   }
 
   resize(size: vec2) {
@@ -65,13 +39,5 @@ export default class Renderer {
     }
 
     this.context = context;
-  }
-
-  setProgram() {
-    this.program = new Program(this.context);
-  }
-
-  useProgram() {
-    this.context.useProgram(this.program.program);
   }
 }
