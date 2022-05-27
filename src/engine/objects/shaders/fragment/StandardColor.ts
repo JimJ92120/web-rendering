@@ -11,6 +11,6 @@ const SOURCE = `
   }
 `;
 
-export default function VertexShader(context: WebGL2RenderingContext): Shader {
+export default function StandardColor(context: WebGL2RenderingContext): Shader {
   return new Shader(context, context.FRAGMENT_SHADER, SOURCE, "a_vertexColor");
 }

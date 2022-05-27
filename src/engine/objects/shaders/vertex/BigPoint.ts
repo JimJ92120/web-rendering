@@ -17,6 +17,6 @@ const SOURCE = `
   }
 `;
 
-export default function VertexShader(context: WebGL2RenderingContext): Shader {
+export default function BigPoint(context: WebGL2RenderingContext): Shader {
   return new Shader(context, context.VERTEX_SHADER, SOURCE, "a_vertexPosition");
 }

@@ -3,10 +3,10 @@ import { vec2, vec4 } from "@/engine/types";
 import Material from "@/engine/components/Material";
 import Renderer from "@/engine/Renderer";
 
-import VertexShader from "@/engine/objects/shaders/VertexShader";
-import FragmentShader from "@/engine/objects/shaders/FragmentShader";
+import BigPoint from "@/engine/objects/shaders/vertex/BigPoint";
+import StandardColor from "@/engine/objects/shaders/fragment/StandardColor";
 import Points from "@/engine/objects/materials/Points";
-import Triangles from "./objects/materials/Triangles";
+import Triangles from "@/engine/objects/materials/Triangles";
 
 export function run(canvasId: string) {
   console.log("running...");
@@ -19,18 +19,18 @@ export function run(canvasId: string) {
   renderer.resize(dimensions);
   renderer.clearColor(clearColor);
 
-  const vertexShader = VertexShader(renderer.context);
-  const fragmentShader = FragmentShader(renderer.context);
+  const bigPoint = BigPoint(renderer.context);
+  const standardColor = StandardColor(renderer.context);
 
-  renderer.attachShaders([vertexShader, fragmentShader]);
+  renderer.attachShaders([bigPoint, standardColor]);
 
   const points: Material = Points(renderer.context, renderer.program, [
-    vertexShader,
-    fragmentShader,
+    bigPoint,
+    standardColor,
   ]);
   const triangles: Material = Triangles(renderer.context, renderer.program, [
-    vertexShader,
-    fragmentShader,
+    bigPoint,
+    standardColor,
   ]);
 
   renderer.addMaterials([triangles, points]);
