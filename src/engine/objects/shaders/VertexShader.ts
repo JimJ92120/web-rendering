@@ -1,4 +1,3 @@
-import Renderer from "@/engine/Renderer";
 import Shader from "@/engine/components/Shader";
 
 const SOURCE = `
@@ -18,11 +17,6 @@ const SOURCE = `
   }
 `;
 
-export default function VertexShader(renderer: Renderer): Shader {
-  return new Shader(
-    renderer.context,
-    renderer.context.VERTEX_SHADER,
-    SOURCE,
-    "a_vertexPosition"
-  );
+export default function VertexShader(context: WebGL2RenderingContext): Shader {
+  return new Shader(context, context.VERTEX_SHADER, SOURCE, "a_vertexPosition");
 }

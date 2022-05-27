@@ -19,13 +19,19 @@ export function run(canvasId: string) {
   renderer.resize(dimensions);
   renderer.clearColor(clearColor);
 
-  const vertexShader = VertexShader(renderer);
-  const fragmentShader = FragmentShader(renderer);
+  const vertexShader = VertexShader(renderer.context);
+  const fragmentShader = FragmentShader(renderer.context);
 
   renderer.attachShaders([vertexShader, fragmentShader]);
 
-  const squares1: Material = Squares1(renderer, [vertexShader, fragmentShader]);
-  const squares2: Material = Squares2(renderer, [vertexShader, fragmentShader]);
+  const squares1: Material = Squares1(renderer.context, renderer.program, [
+    vertexShader,
+    fragmentShader,
+  ]);
+  const squares2: Material = Squares2(renderer.context, renderer.program, [
+    vertexShader,
+    fragmentShader,
+  ]);
 
   renderer.addMaterials([squares1, squares2]);
 

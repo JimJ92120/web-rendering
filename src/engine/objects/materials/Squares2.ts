@@ -1,21 +1,22 @@
 import { BufferData } from "@/engine/components/types";
 
 import Material from "@/engine/components/Material";
-
-import Points from "@/engine/objects/materials/base/Points";
-import Renderer from "@/engine/Renderer";
+import Program from "@/engine/components/Program";
 import Shader from "@/engine/components/Shader";
 
+import Points from "@/engine/objects/materials/base/Points";
+
 export default function Squares2(
-  renderer: Renderer,
+  context: WebGL2RenderingContext,
+  program: Program,
   shaders: [Shader, Shader]
 ): Material {
-  const vertexPositionAttribute: number = renderer.context.getAttribLocation(
-    renderer.program.program,
+  const vertexPositionAttribute: number = context.getAttribLocation(
+    program.program,
     shaders[0].attribute
   );
-  const vertexColorAttribute: number = renderer.context.getAttribLocation(
-    renderer.program.program,
+  const vertexColorAttribute: number = context.getAttribLocation(
+    program.program,
     shaders[1].attribute
   );
   const positionData: BufferData = {
@@ -39,7 +40,7 @@ export default function Squares2(
     /* eslint-enable */
   };
 
-  const squares = new Points(renderer.context, positionData, colorsData);
+  const squares = new Points(context, positionData, colorsData);
 
   return squares;
 }
