@@ -1,24 +1,37 @@
-function isLinked(
-  context: WebGL2RenderingContext,
-  program: WebGLProgram
-): boolean {
-  return context.getProgramParameter(program, context.LINK_STATUS);
-}
+export default class Program {
+  context: WebGL2RenderingContext;
+  program: WebGLProgram;
 
-export function create(context: WebGL2RenderingContext): WebGLProgram {
-  const program: WebGLProgram | null = context.createProgram();
+  constructor(context: WebGL2RenderingContext) {
+    this.context = context;
 
-  if (!program) {
-    throw new Error("program not created.");
+    this.setProgram();
   }
 
-  return program;
-}
+  isLinked(): boolean {
+    return this.context.getProgramParameter(
+      this.program,
+      this.context.LINK_STATUS
+    );
+  }
 
-export function link(context: WebGL2RenderingContext, program: WebGLProgram) {
-  context.linkProgram(program);
+  link() {
+    this.context.linkProgram(this.program);
 
-  if (!isLinked(context, program)) {
-    throw new Error("program not linked.");
+    if (!this.isLinked()) {
+      this.context.deleteProgram(this.program);
+
+      throw new Error("program not linked.");
+    }
+  }
+
+  setProgram() {
+    const program: WebGLProgram | null = this.context.createProgram();
+
+    if (!program) {
+      throw new Error("program not created.");
+    }
+
+    this.program = program;
   }
 }

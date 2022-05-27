@@ -1,13 +1,20 @@
-export default class EngineShader {
+export default class Shader {
+  attribute: string;
   context: WebGL2RenderingContext;
   shader: WebGLShader;
   source: string;
   type: number;
 
-  constructor(context: WebGL2RenderingContext, type: number, source: string) {
+  constructor(
+    context: WebGL2RenderingContext,
+    type: number,
+    source: string,
+    attribute: string
+  ) {
     this.context = context;
     this.source = source;
     this.type = type;
+    this.attribute = attribute;
 
     this.create();
     this.compile();
