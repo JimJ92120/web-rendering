@@ -5,8 +5,8 @@ import Renderer from "@/engine/Renderer";
 
 import VertexShader from "@/engine/objects/shaders/VertexShader";
 import FragmentShader from "@/engine/objects/shaders/FragmentShader";
-import Squares1 from "@/engine/objects/materials/Points1";
-import Squares2 from "@/engine/objects/materials/Points2";
+import Points from "@/engine/objects/materials/Points";
+import Triangles from "./objects/materials/Triangles";
 
 export function run(canvasId: string) {
   console.log("running...");
@@ -24,16 +24,16 @@ export function run(canvasId: string) {
 
   renderer.attachShaders([vertexShader, fragmentShader]);
 
-  const points1: Material = Squares1(renderer.context, renderer.program, [
+  const points: Material = Points(renderer.context, renderer.program, [
     vertexShader,
     fragmentShader,
   ]);
-  const points2: Material = Squares2(renderer.context, renderer.program, [
+  const triangles: Material = Triangles(renderer.context, renderer.program, [
     vertexShader,
     fragmentShader,
   ]);
 
-  renderer.addMaterials([points1, points2]);
+  renderer.addMaterials([triangles, points]);
 
   renderer.render();
 }
