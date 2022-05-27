@@ -1,8 +1,8 @@
-import { BufferData } from "../../materials/types";
+import { BufferData } from "@/engine/materials/types";
 
-import InterfaceMaterial from "../../materials/InterfaceMaterial";
+import InterfaceMaterial from "@/engine/materials/InterfaceMaterial";
 
-import Points from "../../materials/Points";
+import Points from "@/engine/materials/Points";
 
 export default function Squares2(
   context: WebGL2RenderingContext,

@@ -1,8 +1,8 @@
 import { vec2, vec4 } from "@/types";
-import InterfaceMaterial from "./materials/InterfaceMaterial";
-import EngineShader from "./textures/EngineShader";
+import InterfaceMaterial from "@/engine/materials/InterfaceMaterial";
+import EngineShader from "@/engine/textures/EngineShader";
 
-import Components from "./components";
+import Components from "@/engine/components";
 
 import { VERTEX_SHADER_SOURCE } from "./textures/VertexShader";
 import { FRAGMENT_SHADER_SOURCE } from "./textures/FragmentShader";

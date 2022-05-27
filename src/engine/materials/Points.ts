@@ -1,6 +1,6 @@
 import { BufferData } from "./types";
 
-import Components from "../components";
+import Components from "@/engine/components";
 
 import InterfaceMaterial from "./InterfaceMaterial";
 
