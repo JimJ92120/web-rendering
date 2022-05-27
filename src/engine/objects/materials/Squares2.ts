@@ -1,10 +1,10 @@
-import { BufferData } from "@/engine/components/types";
+import { BufferData } from "@/engine/types";
 
 import Material from "@/engine/components/Material";
 import Program from "@/engine/components/Program";
 import Shader from "@/engine/components/Shader";
 
-import Points from "@/engine/objects/materials/base/Points";
+import PointsMaterial from "@/engine/components/materials/PointsMaterial";
 
 export default function Squares2(
   context: WebGL2RenderingContext,
@@ -40,7 +40,7 @@ export default function Squares2(
     /* eslint-enable */
   };
 
-  const squares = new Points(context, positionData, colorsData);
+  const squares = new PointsMaterial(context, positionData, colorsData);
 
   return squares;
 }

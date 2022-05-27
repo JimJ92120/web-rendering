@@ -1,9 +1,9 @@
-import { BufferData } from "@/engine/components/types";
+import { BufferData } from "@/engine/types";
 
 import Material from "@/engine/components/Material";
 import Buffer from "@/engine/components/Buffer";
 
-export default class Points extends Material {
+export default class PointsMaterial extends Material {
   draw() {
     this.setBuffer(this.vertices);
     this.setBuffer(this.colors);

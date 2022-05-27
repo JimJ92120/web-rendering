@@ -1,4 +1,4 @@
-import { BufferData } from "./types";
+import { BufferData } from "@/engine/types";
 
 export default abstract class Material {
   context: WebGL2RenderingContext;

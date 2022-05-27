@@ -1,9 +1,9 @@
-import { vec2, vec4 } from "@/types";
-import Material from "./components/Material";
+import { vec2, vec4 } from "@/engine/types";
+import Material from "@/engine/components/Material";
 
-import InterfaceMaterial from "./components/Material";
-import Program from "./components/Program";
-import Shader from "./components/Shader";
+import InterfaceMaterial from "@/engine/components/Material";
+import Program from "@/engine/components/Program";
+import Shader from "@/engine/components/Shader";
 
 export default class Renderer {
   canvas: HTMLCanvasElement;

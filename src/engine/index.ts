@@ -1,4 +1,4 @@
-import { vec2, vec4 } from "@/types";
+import { vec2, vec4 } from "@/engine/types";
 
 import Material from "@/engine/components/Material";
 import Renderer from "@/engine/Renderer";
