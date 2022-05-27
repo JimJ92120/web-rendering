@@ -1,4 +1,4 @@
-import Shader from "@/engine/components/Shader";
+import Shader from "@/engine/components/base/Shader";
 
 const SOURCE = `
   #version 100

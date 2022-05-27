@@ -1,13 +1,19 @@
 import { BufferData } from "@/engine/types";
 
 export default class Buffer {
+  attribute: number;
   buffer: WebGLBuffer;
   bufferData: BufferData;
   context: WebGL2RenderingContext;
 
-  constructor(context: WebGL2RenderingContext, bufferData: BufferData) {
+  constructor(
+    context: WebGL2RenderingContext,
+    bufferData: BufferData,
+    attribute: number
+  ) {
     this.bufferData = bufferData;
     this.context = context;
+    this.attribute = attribute;
 
     this.setBuffer();
   }
@@ -20,14 +26,14 @@ export default class Buffer {
       this.context.STATIC_DRAW
     );
     this.context.vertexAttribPointer(
-      this.bufferData.attribute,
+      this.attribute,
       this.bufferData.size,
       this.context.FLOAT,
       false,
       0,
       0
     );
-    this.context.enableVertexAttribArray(this.bufferData.attribute);
+    this.context.enableVertexAttribArray(this.attribute);
   }
 
   setBuffer() {
