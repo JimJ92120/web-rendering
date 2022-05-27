@@ -3,7 +3,7 @@ import { BufferData } from "@/engine/components/types";
 import Material from "@/engine/components/Material";
 
 import Points from "@/engine/objects/materials/base/Points";
-import Renderer from "@/engine/components/Renderer";
+import Renderer from "@/engine/Renderer";
 import Shader from "@/engine/components/Shader";
 
 export default function Squares1(

@@ -1,8 +1,9 @@
 import { vec2, vec4 } from "@/types";
+import Material from "./components/Material";
 
-import InterfaceMaterial from "./Material";
-import Program from "./Program";
-import Shader from "./Shader";
+import InterfaceMaterial from "./components/Material";
+import Program from "./components/Program";
+import Shader from "./components/Shader";
 
 export default class Renderer {
   canvas: HTMLCanvasElement;
@@ -16,8 +17,17 @@ export default class Renderer {
     this.setProgram();
   }
 
-  attachShader({ shader }: Shader) {
-    this.context.attachShader(this.program.program, shader);
+  addMaterials(newMaterials: Material[]) {
+    const materials: InterfaceMaterial[] = this.materials;
+
+    this.materials = [...materials, ...newMaterials];
+  }
+
+  attachShaders(shaders: Shader[]) {
+    shaders.map(({ shader }) =>
+      this.context.attachShader(this.program.program, shader)
+    );
+    this.program.link();
   }
 
   clearColor(color: vec4) {
@@ -26,6 +36,7 @@ export default class Renderer {
   }
 
   render() {
+    this.useProgram();
     this.materials.map((material) => material.draw());
   }
 

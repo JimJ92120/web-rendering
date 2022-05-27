@@ -1,4 +1,4 @@
-import Renderer from "@/engine/components/Renderer";
+import Renderer from "@/engine/Renderer";
 import Shader from "@/engine/components/Shader";
 
 const SOURCE = `

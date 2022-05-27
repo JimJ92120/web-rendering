@@ -1,7 +1,7 @@
 import { vec2, vec4 } from "@/types";
 
 import Material from "@/engine/components/Material";
-import Renderer from "@/engine/components/Renderer";
+import Renderer from "@/engine/Renderer";
 
 import VertexShader from "@/engine/objects/shaders/VertexShader";
 import FragmentShader from "@/engine/objects/shaders/FragmentShader";
@@ -22,15 +22,12 @@ export function run(canvasId: string) {
   const vertexShader = VertexShader(renderer);
   const fragmentShader = FragmentShader(renderer);
 
-  renderer.attachShader(vertexShader);
-  renderer.attachShader(fragmentShader);
-
-  renderer.program.link();
+  renderer.attachShaders([vertexShader, fragmentShader]);
 
   const squares1: Material = Squares1(renderer, [vertexShader, fragmentShader]);
   const squares2: Material = Squares2(renderer, [vertexShader, fragmentShader]);
 
-  renderer.useProgram();
+  renderer.addMaterials([squares1, squares2]);
 
-  [squares1, squares2].map((material) => material.draw());
+  renderer.render();
 }
