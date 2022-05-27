@@ -42,6 +42,7 @@ export default abstract class Material {
 
   render() {
     this.useProgram();
+    this.buffers.map((buffer) => buffer.load());
     this.draw();
   }
 
