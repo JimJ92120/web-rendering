@@ -19,9 +19,12 @@ export default class Program {
     this.context.linkProgram(this.program);
 
     if (!this.isLinked()) {
+      const message: string | null = this.context.getProgramInfoLog(
+        this.program
+      );
       this.context.deleteProgram(this.program);
 
-      throw new Error("program not linked.");
+      throw new Error(message || "program not linked.");
     }
   }
 

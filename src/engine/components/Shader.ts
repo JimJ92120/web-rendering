@@ -1,20 +1,13 @@
 export default class Shader {
-  attribute: string;
   context: WebGL2RenderingContext;
   shader: WebGLShader;
   source: string;
   type: number;
 
-  constructor(
-    context: WebGL2RenderingContext,
-    type: number,
-    source: string,
-    attribute: string
-  ) {
+  constructor(context: WebGL2RenderingContext, type: number, source: string) {
     this.context = context;
     this.source = source;
     this.type = type;
-    this.attribute = attribute;
 
     this.create();
     this.compile();
@@ -35,9 +28,11 @@ export default class Shader {
     this.context.compileShader(this.shader);
 
     if (!this.isCompiled()) {
+      const message: string | null = this.context.getShaderInfoLog(this.shader);
+
       this.context.deleteShader(this.shader);
 
-      throw new Error("shader not compiled.");
+      throw new Error(message || "shader not compiled.");
     }
   }
 
