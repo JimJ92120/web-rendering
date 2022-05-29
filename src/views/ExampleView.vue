@@ -1,6 +1,6 @@
 <template>
   <div class="example">
-    <h1>This is a page example</h1>
+    <h1>Example {{ $route.params.id }}</h1>
     <div>
       <canvas id="frame"></canvas>
     </div>
@@ -9,12 +9,39 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import * as Engine from "@/engine";
 
 export default defineComponent({
   name: "ExampleView",
-  mounted: () => {
-    Engine.run("frame");
+  data() {
+    return {
+      example: function () {
+        //
+      },
+    };
+  },
+  async created() {
+    const { id: exampleId } = this.$route.params;
+    this.runExample(Number(exampleId));
+
+    this.$watch(
+      () => this.$route.params,
+      async (toParams: any) => {
+        this.runExample(Number(toParams.id));
+      }
+    );
+  },
+  methods: {
+    runExample: async function (exampleId: number) {
+      try {
+        const example = await import(`@/engine/examples/Example${exampleId}`);
+
+        example.run("frame");
+      } catch (error) {
+        console.error(error);
+
+        throw new Error("no example found.");
+      }
+    },
   },
 });
 </script>
