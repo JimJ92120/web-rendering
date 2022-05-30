@@ -5,6 +5,25 @@ import Program from "@/engine/components/Program";
 import Shader from "@/engine/components/Shader";
 import Buffer from "@/engine/components/Buffer";
 
+function getTimeArray(): number[] {
+  const _now = new Date();
+  const timeToArray: number[] = [
+    _now.getHours(),
+    _now.getMinutes(),
+    _now.getSeconds(),
+  ].reduce((accumulator: number[], currentValue: number) => {
+    let timeSplit: string[] = currentValue.toString().split("");
+
+    if (timeSplit.length === 1) {
+      timeSplit = ["0", timeSplit[0]];
+    }
+
+    return [...accumulator, ...[Number(timeSplit[0]), Number(timeSplit[1])]];
+  }, []);
+
+  return timeToArray;
+}
+
 export function run(canvasId: string) {
   console.log("running...");
 
@@ -20,20 +39,23 @@ export function run(canvasId: string) {
 
   const program = new Program(context);
 
-  const a_position = "a_position";
   const u_resolution = "u_resolution";
   const u_time = "u_time";
+  const u_verticesCount = "u_verticesCount";
+
+  const a_index = "a_index";
 
   const POSITION_SOURCE = `#version 300 es
     precision highp float;
 
     uniform vec2 ${u_resolution};
-    uniform float ${u_time};
-    
-    in vec2 ${a_position};
+    uniform int ${u_time}[6];
+    uniform float ${u_verticesCount};
+
+    in float ${a_index};
 
     void main() {
-      gl_Position = vec4(${a_position}, 0.0, 1.0);
+      gl_Position = vec4(${a_index}, 0.0, 0.0, 1.0);
       gl_PointSize = 100.0;
     }
   `;
@@ -41,7 +63,8 @@ export function run(canvasId: string) {
     precision highp float;
 
     uniform vec2 ${u_resolution};
-    uniform float ${u_time};
+    uniform int ${u_time}[6];
+    uniform float ${u_verticesCount};
 
     out vec4 fragColor;
 
@@ -69,26 +92,25 @@ export function run(canvasId: string) {
   program.link();
   context.useProgram(program.program);
 
-  const vertexSize = 2;
+  const verticesCount = 1;
+  const vertexSize = 1;
   /* eslint-disable */
-  const vertices = new Float32Array([
-    0.0, 0.0,
-  ]);
+  const vertices = new Float32Array([...Array(verticesCount).keys()].map((index) => Number(index)));
   /* eslint-enable */
 
   const buffer = new Buffer(context);
 
   buffer.load(vertices);
 
-  const positionAttribute: number = context.getAttribLocation(
+  const indexAttribute: number = context.getAttribLocation(
     program.program,
-    a_position
+    a_index
   );
 
-  context.enableVertexAttribArray(positionAttribute);
+  context.enableVertexAttribArray(indexAttribute);
 
   context.vertexAttribPointer(
-    positionAttribute,
+    indexAttribute,
     vertexSize,
     context.FLOAT,
     false,
@@ -96,18 +118,23 @@ export function run(canvasId: string) {
     0
   );
 
-  const u_resolutionAttribute: WebGLUniformLocation | null =
+  const u_resolutionLocation: WebGLUniformLocation | null =
     context.getUniformLocation(program.program, u_resolution);
-  const u_timeAttribute: WebGLUniformLocation | null =
+  const u_timeLocation: WebGLUniformLocation | null =
     context.getUniformLocation(program.program, u_time);
+  const u_verticesCountLocation: WebGLUniformLocation | null =
+    context.getUniformLocation(program.program, u_verticesCount);
 
-  context.uniform2f(u_resolutionAttribute, canvas.width, canvas.height);
+  context.uniform2f(u_resolutionLocation, canvas.width, canvas.height);
+  context.uniform1iv(u_timeLocation, new Float32Array(getTimeArray()));
+  context.uniform1f(u_verticesCountLocation, verticesCount);
 
   let loop = 0.0;
+
   const animate: FrameRequestCallback = () => {
     scene.clearColor(clearColor);
 
-    context.uniform1f(u_timeAttribute, loop);
+    context.uniform1iv(u_timeLocation, new Float32Array(getTimeArray()));
     context.drawArrays(context.POINTS, 0, vertices.length / vertexSize);
 
     loop = requestAnimationFrame(animate);
@@ -115,11 +142,11 @@ export function run(canvasId: string) {
 
   requestAnimationFrame(animate);
 
-  setTimeout(() => {
-    if (loop) {
-      cancelAnimationFrame(loop);
+  // setTimeout(() => {
+  //   if (loop) {
+  //     cancelAnimationFrame(loop);
 
-      loop = 0.0;
-    }
-  }, 5000);
+  //     loop = 0.0;
+  //   }
+  // }, 5000);
 }
