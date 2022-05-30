@@ -1,6 +1,15 @@
 # web-rendering
 
-Some 2D and 3D for web.
+"<em>If I had no data except a vertex id could I draw something interesting?</em>" - [webglfundamentals.org](https://webglfundamentals.org/webgl/lessons/webgl-drawing-without-data.html)  
+
+---
+## Examples
+
+### Clock
+<img src="./screenshots/example-3.PNG" alt="Example 3" height="250px" width="400px">    
+
+### Digital clock
+<img src="./screenshots/example-4.PNG" alt="Example 4" height="250px" width="400px">    
 
 ---
 ## Requirements
