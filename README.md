@@ -5,10 +5,10 @@
 ---
 ## Examples
 
-### Clock
-<img src="./screenshots/example-3.PNG" alt="Example 3" height="250px" width="400px">    
+### Clock - [Example 3](./src/engine/examples/Example3.ts)  
+  <img src="./screenshots/example-3.PNG" alt="Example 3" height="250px" width="400px">    
 
-### Digital clock
+### Digital clock - [Example 4](./src/engine/examples/Example4.ts)  
 <img src="./screenshots/example-4.PNG" alt="Example 4" height="250px" width="400px">    
 
 ---
