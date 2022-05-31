@@ -1,8 +1,10 @@
 <template>
   <div class="example">
-    <h1>Example {{ $route.params.id }}</h1>
+    <div class="example__buttons">
+      <button id="start" @click="startExample">Start</button>
+    </div>
     <div>
-      <canvas id="frame"></canvas>
+      <canvas id="frame" height="500" width="800"></canvas>
     </div>
   </div>
 </template>
@@ -14,33 +16,37 @@ export default defineComponent({
   name: "ExampleView",
   data() {
     return {
-      example: function () {
-        //
+      example: {
+        run: function (canvasId: string) {
+          //
+        },
       },
+      loop: 0,
     };
   },
   async created() {
     const { id: exampleId } = this.$route.params;
-    this.runExample(Number(exampleId));
+    this.setxample(Number(exampleId));
 
     this.$watch(
       () => this.$route.params,
       async (toParams: any) => {
-        this.runExample(Number(toParams.id));
+        this.setxample(Number(toParams.id));
       }
     );
   },
   methods: {
-    runExample: async function (exampleId: number) {
+    setxample: async function (exampleId: number) {
       try {
-        const example = await import(`@/engine/examples/Example${exampleId}`);
-
-        example.run("frame");
+        this.example = await import(`@/engine/examples/Example${exampleId}`);
       } catch (error) {
         console.error(error);
 
         throw new Error("no example found.");
       }
+    },
+    startExample: async function () {
+      this.example.run("frame");
     },
   },
 });
@@ -48,6 +54,13 @@ export default defineComponent({
 
 <style lang="scss">
 #frame {
-  background-color: lightblue;
+  background-color: #000;
+}
+.example__buttons {
+  margin-bottom: 1rem;
+
+  & button {
+    margin: 0 1em;
+  }
 }
 </style>

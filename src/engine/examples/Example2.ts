@@ -11,7 +11,7 @@ export function run(canvasId: string) {
   const scene = new Scene(canvasId);
 
   const dimensions: vec2 = [800, 500];
-  const clearColor: vec4 = [0.0, 1.0, 1.0, 1.0];
+  const clearColor: vec4 = [0.0, 0.0, 0.0, 1.0];
 
   scene.resize(dimensions);
   scene.clearColor(clearColor);
@@ -118,6 +118,7 @@ export function run(canvasId: string) {
 
   context.uniform2f(u_resolutionAttribute, canvas.width, canvas.height);
 
+  const resetLimit = 500.0;
   let loop = 0.0;
   const animate: FrameRequestCallback = () => {
     scene.clearColor(clearColor);
@@ -125,16 +126,10 @@ export function run(canvasId: string) {
     context.uniform1f(u_timeAttribute, loop);
     context.drawArrays(context.POINTS, 0, vertices.length / vertexSize);
 
-    loop = requestAnimationFrame(animate);
+    loop += loop >= resetLimit ? -resetLimit : 1.0;
+
+    requestAnimationFrame(animate);
   };
 
   requestAnimationFrame(animate);
-
-  setTimeout(() => {
-    if (loop) {
-      cancelAnimationFrame(loop);
-
-      loop = 0.0;
-    }
-  }, 5000);
 }

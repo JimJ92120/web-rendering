@@ -7,16 +7,21 @@
     <router-link to="/examples/4">Example 4</router-link> |
     <router-link to="/examples/5">Example 5</router-link>
   </nav>
+  <p>Select an example and press start.</p>
   <router-view />
 </template>
 
 <style lang="scss">
+body {
+  background-color: #000;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #d2deeb;
 }
 
 nav {
@@ -24,7 +29,7 @@ nav {
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #d2deeb;
 
     &.router-link-exact-active {
       color: #42b983;

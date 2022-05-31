@@ -11,7 +11,7 @@ export function run(canvasId: string) {
   const scene = new Scene(canvasId);
 
   const dimensions: vec2 = [800, 500];
-  const clearColor: vec4 = [0.0, 1.0, 1.0, 1.0];
+  const clearColor: vec4 = [0.0, 0.0, 0.0, 1.0];
 
   scene.resize(dimensions);
   scene.clearColor(clearColor);
@@ -44,7 +44,7 @@ export function run(canvasId: string) {
       vec2 zeroToTwo = zeroToOne * 2.0;
       vec2 clipSpace = (zeroToTwo - 1.0);
 
-      gl_Position = vec4(clipSpace, 0, 1);
+      gl_Position = vec4(clipSpace, 0.0, 1.0);
       gl_PointSize = ${u_pixelSize};
 
       index = a_index;
@@ -95,7 +95,7 @@ export function run(canvasId: string) {
 
   const count = 10.0;
   const pixelSize = 10.0;
-  const startColor = [0.0, 1.0, 1.0];
+  const startColor = [1.0, 0.0, 0.0];
   const vertexSize = 1;
   /* eslint-disable */
   const vertices = new Float32Array([...Array(count).keys()].map((index) => index + 1));
@@ -160,12 +160,4 @@ export function run(canvasId: string) {
   };
 
   requestAnimationFrame(animate);
-
-  setTimeout(() => {
-    if (loop) {
-      cancelAnimationFrame(loop);
-
-      loop = null;
-    }
-  }, 5000);
 }

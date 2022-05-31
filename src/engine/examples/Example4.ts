@@ -12,13 +12,6 @@ import Buffer from "@/engine/components/Buffer";
 // *** * *   * *     *   *   * * *   * * *   *
 // *** ***   * *** ***   * *** ***   * *** ***
 
-// ___ ___  _  ___ ___19
-// ***   *     *** ***
-// * *   *  *    *   *
-// * *   *     *** ***
-// * *   *  *  *     *
-// ***   *     *** ***
-
 function getTimeArray(): number[] {
   const _now = new Date();
   const timeToArray: number[] = [
@@ -44,7 +37,7 @@ export function run(canvasId: string) {
   const scene = new Scene(canvasId);
 
   const dimensions: vec2 = [800, 500];
-  const clearColor: vec4 = [0.0, 1.0, 1.0, 1.0];
+  const clearColor: vec4 = [0.0, 0.0, 0.0, 1.0];
 
   scene.resize(dimensions);
   scene.clearColor(clearColor);
@@ -224,7 +217,7 @@ export function run(canvasId: string) {
     out vec4 fragColor;
 
     void main() {  
-      fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+      fragColor = vec4(1.0, 1.0, 1.0, 1.0);
     }
   `;
 
@@ -293,24 +286,14 @@ export function run(canvasId: string) {
   context.uniform1f(u_pixelSizeLocation, pixelSize);
   context.uniform1f(u_lineWidthLocation, lineWidth);
 
-  let loop = 0.0;
-
   const animate: FrameRequestCallback = () => {
     scene.clearColor(clearColor);
 
     context.uniform1iv(u_timeLocation, new Float32Array(getTimeArray()));
     context.drawArrays(context.POINTS, 0, vertices.length / vertexSize);
 
-    loop = requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
   };
 
   requestAnimationFrame(animate);
-
-  // setTimeout(() => {
-  //   if (loop) {
-  //     cancelAnimationFrame(loop);
-
-  //     loop = 0.0;
-  //   }
-  // }, 5000);
 }

@@ -11,7 +11,7 @@ export function run(canvasId: string) {
   const scene = new Scene(canvasId);
 
   const dimensions: vec2 = [800, 500];
-  const clearColor: vec4 = [0.0, 1.0, 1.0, 1.0];
+  const clearColor: vec4 = [0.0, 0.0, 0.0, 1.0];
 
   scene.resize(dimensions);
   scene.clearColor(clearColor);
@@ -121,13 +121,13 @@ export function run(canvasId: string) {
 
     void main() {
       if (index == 14.0) {
-        fragColor = vec4(0.0, 0.0, 10.0, 1.0);
+        fragColor = vec4(1.0, 0.0, 0.0, 1.0);
       } else if (index == 13.0) {
         fragColor = vec4(0.0, 1.0, 0.0, 1.0);
       } else if (index == 12.0) {
-        fragColor = vec4(1.0, 0.0, 1.0, 1.0);
+        fragColor = vec4(0.0, 0.0, 1.0, 1.0);
       } else {
-        fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        fragColor = vec4(1.0, 1.0, 1.0, 1.0);
       }
     }
   `;
@@ -193,7 +193,6 @@ export function run(canvasId: string) {
   context.uniform1f(u_countLocation, verticesCount);
   context.uniform1f(u_pixelSizeLocation, pixelSize);
 
-  // let loop = 0.0;
   const animate: FrameRequestCallback = () => {
     scene.clearColor(clearColor);
 
@@ -207,17 +206,8 @@ export function run(canvasId: string) {
 
     context.drawArrays(context.POINTS, 0, vertices.length / vertexSize);
 
-    // loop = requestAnimationFrame(animate);
     requestAnimationFrame(animate);
   };
 
   requestAnimationFrame(animate);
-
-  // setTimeout(() => {
-  //   if (loop) {
-  //     cancelAnimationFrame(loop);
-
-  //     loop = 0.0;
-  //   }
-  // }, 5000);
 }

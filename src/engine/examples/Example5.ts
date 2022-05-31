@@ -164,7 +164,7 @@ export function run(canvasId: string) {
   const animate: FrameRequestCallback = () => {
     scene.clearColor(clearColor);
 
-    context.uniform1f(u_loopTimeLocation, loop);
+    context.uniform1f(u_loopTimeLocation, loop / 10);
     context.uniform1iv(u_timeLocation, new Float32Array(getTimeArray()));
     context.drawArrays(context.POINTS, 0, vertices.length / vertexSize);
 
@@ -172,12 +172,4 @@ export function run(canvasId: string) {
   };
 
   requestAnimationFrame(animate);
-
-  // setTimeout(() => {
-  //   if (loop) {
-  //     cancelAnimationFrame(loop);
-
-  //     loop = 0.0;
-  //   }
-  // }, 5000);
 }
