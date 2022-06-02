@@ -5,7 +5,8 @@
     <router-link to="/examples/2">Example 2</router-link> |
     <router-link to="/examples/3">Example 3</router-link> |
     <router-link to="/examples/4">Example 4</router-link> |
-    <router-link to="/examples/5">Example 5</router-link>
+    <router-link to="/examples/5">Example 5</router-link> |
+    <router-link to="/examples/6">Example 6</router-link>
   </nav>
   <p>Select an example and press start.</p>
   <router-view />
